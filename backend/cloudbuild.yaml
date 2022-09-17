@@ -1,0 +1,18 @@
+steps:
+- name: node:14.15.0
+  entrypoint: npm
+  args: ["install"]
+- name: node:14.15.0
+  dir: backend/
+  entrypoint: npm
+  args: ["run", "create-env"]
+  env:
+  - 'SITE_URL=${_SITE_URL}'
+  - 'MONGO_URL=${_MONGO_URL}'
+  - 'OPENAI_API_KEY=${_OPENAI_API_KEY}'
+  - 'COHERE_API_KEY=${_COHERE_API_KEY}'
+
+- name: "gcr.io/cloud-builders/gcloud"
+  dir: backend/
+  args: ["app", "deploy", "app.yaml"]
+timeout: '1600s'

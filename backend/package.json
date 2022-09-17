@@ -34,6 +34,7 @@
   "dependencies": {
     "@types/node": "^16.6.1",
     "axios": "^0.21.4",
+    "cohere-ai": "^4.3.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",

@@ -1,4 +1,5 @@
 import openai from "../connections/openai.client";
+import cohere from "../connections/cohere.client";
 import { CreateCompletionResponse } from "openai";
 
 //Define types for the output.
@@ -10,6 +11,12 @@ type LandingPageOutput = {
 };
 
 async function createCompletion(prompt: string, model = "text-davinci-002"): Promise<string> {
+  const cohereCompletion = await cohere.generate({
+    prompt: prompt,
+    temperature: 0.5,
+    preset: "",
+  });
+  console.log(`Cohere Prediction: ${cohereCompletion.body.generations[0].text}`);
   const completion = await openai.createCompletion({
     prompt,
     model,
