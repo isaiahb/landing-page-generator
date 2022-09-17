@@ -16,7 +16,7 @@ async function createCompletion(prompt: string, model = "text-davinci-002"): Pro
     temperature: 0.5,
     preset: "",
   });
-  console.log(`Cohere Prediction: ${cohereCompletion.body.generations[0].text}`);
+  // console.log(`Cohere Prediction: ${cohereCompletion.body.generations[0].text}`);
   const completion = await openai.createCompletion({
     prompt,
     model,
