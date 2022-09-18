@@ -37,12 +37,11 @@ export type Testimonial = {
 
 const api = {
   page: {
-    create: (page: PageI) => axios.post("api/page", page),
-    get: (title: string) => axios.get(`api/page/${title}`),
-    update: (title: string, page: PageI) =>
-      axios.put(`api/page/${title}`, page),
-    delete: (title: string) => axios.delete(`api/page/${title}`),
-    getAll: () => axios.get("api/page"),
+    create: async (page: PageI): Promise<PageI>  => (await axios.post("api/page", page)).data,
+    get: async (title: string): Promise<PageI> => (await axios.get(`api/page/${title}`)).data,
+    update: async (title: string, page: PageI): Promise<PageI> => (await axios.put(`api/page/${title}`, page)).data,
+    delete: async (title: string) => await axios.delete(`api/page/${title}`),
+    getAll: async (): Promise<PageI[]> => (await axios.get("api/page")).data,
   },
 
   generate: {

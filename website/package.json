@@ -11,9 +11,15 @@
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@mantine/carousel": "^5.3.3",
+    "@mantine/core": "^5.3.3",
+    "@mantine/hooks": "^5.3.3",
+    "@mantine/spotlight": "^5.3.3",
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.5",
+    "@tabler/icons": "^1.96.0",
     "axios": "^0.27.2",
+    "embla-carousel-react": "^7.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0"

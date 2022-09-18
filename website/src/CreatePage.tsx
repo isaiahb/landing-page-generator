@@ -15,12 +15,15 @@ function Page() {
   const [prompt, setPrompt] = useState({ title: "", description: "" });
   const [teammates, setTeammates] = useState<Teammate[]>([]);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   function onPromptChange(event: React.ChangeEvent<HTMLInputElement>) {
     setPrompt({ ...prompt, [event.target.name]: event.target.value });
   }
 
   async function createLandingPage() {
+    if (loading) return;
+    setLoading(true);
     try {
       const pageInputs: PageI = (await api.generate.create(prompt.title + " - " + prompt.description)).data as PageI;
       const page = await api.page.create({...pageInputs, title: prompt.title});
@@ -28,6 +31,9 @@ function Page() {
     }
     catch (error) {
       console.log(error);
+    }
+    finally {
+      setLoading(false);
     }
   }
 
@@ -189,8 +195,9 @@ function Page() {
               size="large"
               style={{ backgroundColor: "black", fontWeight: "600" }}
               onClick={() => {
-                const url = `/create/${prompt.title}/${prompt.description}`;
-                navigate(url);
+                // const url = `/create/${prompt.title}/${prompt.description}`;
+                // navigate(url);
+                createLandingPage();
               }}
               fullWidth
             >
@@ -203,7 +210,7 @@ function Page() {
   );
 }
 
-function PromptPage(props: {}) {
+function CreatePage(props: {}) {
   const TITLE = "My Landing Page - Prompt";
   document.title = TITLE;
 
@@ -218,4 +225,4 @@ function PromptPage(props: {}) {
   );
 }
 
-export default PromptPage;
+export default CreatePage;

@@ -71,5 +71,5 @@ async function updatePageByTitle(req: Request, res: Response) {
 router.post("/page", createPage);
 router.delete("/page/:title", deletePage);
 router.get("/page/:title", getPageByTitle);
-router.get("/page.", getAllPages);
+router.get("/page", getAllPages);
 router.put("/page/:title", updatePageByTitle);

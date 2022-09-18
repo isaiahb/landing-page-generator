@@ -13,6 +13,7 @@ function LandingPage(props: {
   image: string;
   imageAlt: string;
   actionButtonText: string;
+  actionButtonURL: string;
 
   problemStatement?: string;
   solutionStatment?: string;
@@ -29,6 +30,7 @@ function LandingPage(props: {
     image,
     imageAlt,
     actionButtonText,
+    actionButtonURL,
 
     // Problem statement.
     problemStatement,
@@ -56,6 +58,7 @@ function LandingPage(props: {
         description={description}
         tagline={tagLine}
         actionButtonText={actionButtonText}
+        actionButtonURL={actionButtonURL}
         image={image}
       />
 

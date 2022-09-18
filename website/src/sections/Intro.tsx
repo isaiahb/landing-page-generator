@@ -1,16 +1,19 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Button, Container, Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export function IntroPage(props: {
   title: string;
   description: string;
   tagline: string;
   actionButtonText: string;
+  actionButtonURL: string;
   image: string;
 }) {
-  const { title, description, tagline, actionButtonText, image } = props;
+  const { title, description, tagline, actionButtonText, actionButtonURL, image } = props;
   console.log("Intro page props: ", props);
+  const navigate = useNavigate();
 
   return (
     <Box width={"100vw"} minHeight="100vh">
@@ -46,6 +49,7 @@ export function IntroPage(props: {
                   style={{ backgroundColor: "black", fontWeight: "600" }}
                   onClick={() => {
                     // window.location.href = "/signup-or-login";
+                    navigate(props.actionButtonURL);
                   }}
                 >
                   {actionButtonText}
