@@ -2,6 +2,7 @@ import LandingPage from "./LandingPage";
 import { BrowserRouter, Route, Routes, useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import PromptPage from "./PromptPage";
 
 function JoeMama() {
   return (
@@ -68,7 +69,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/:title/:idea" element={<LandingPageTemplate />} />
-
+        <Route path="/prompt/" element={<PromptPage />} />
         <Route path="*" element={<JoeMama />} />
       </Routes>
     </BrowserRouter>
