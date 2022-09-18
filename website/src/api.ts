@@ -44,6 +44,10 @@ const api = {
     delete: (title: string) => axios.delete(`api/page/${title}`),
     getAll: () => axios.get("api/page"),
   },
+
+  generate: {
+    create: (prompt: string) => axios.get("api/generate/" + prompt),
+  },
 }
 
 export default api;

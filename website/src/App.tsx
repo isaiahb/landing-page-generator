@@ -19,6 +19,64 @@ function JoeMama() {
   );
 }
 
+function OurLandingPage() {
+  const [landingPage, setLandingPage] = useState({
+    title: "",
+    tagline: "",
+    description: "",
+    image: "",
+    imageAlt: "",
+    actionButtonText: "",
+
+    // Problem statement.
+    problemStatement: "",
+    solutionStatment: "",
+
+    // Testimonials.
+    testimonials: [],
+    teammates: [],
+  });
+  const [loading, setLoading] = useState(false);
+  const title = "My Landing Page";
+  const description = "A website that lets you enter a short description about your project and generates a landing page for you.";
+
+  useEffect(() => {
+    if (loading) return;
+    async function getLandingPageInput() {
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `/api/generate/${title}, ${description}`
+        );
+        setLandingPage(response.data);
+        console.log({...response.data, });
+      } catch (error) {
+        console.log(error);
+      }
+      setLoading(false);
+    }
+    getLandingPageInput();
+  }, []);
+  
+  if (!landingPage) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <LandingPage
+      title={landingPage.title}
+      tagline={landingPage.tagline}
+      description={landingPage.description}
+      image={landingPage.image}
+      imageAlt={landingPage.imageAlt}
+      actionButtonText={landingPage.actionButtonText}
+      problemStatement={landingPage.problemStatement}
+      solutionStatment={landingPage.solutionStatment}
+      testimonials={landingPage.testimonials}
+    />
+  );
+}
+
 function CreateLandingPageFromUrl() {
   // Get title and idea params from the URL.
   const { title: TITLE, idea } = useParams();
@@ -89,7 +147,8 @@ function App() {
         <Route path="/create/:title/:idea" element={<CreateLandingPageFromUrl />} />
         <Route path="/github/:username/:repo" element={<PromptPage />} />
         <Route path="/prompt/" element={<PromptPage />} />
-        <Route path="*" element={<JoeMama />} />
+        <Route path="/joe/" element={<JoeMama />} />
+        <Route path="*" element={<OurLandingPage />} />
       </Routes>
     </BrowserRouter>
   );
