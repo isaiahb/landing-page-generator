@@ -5,7 +5,7 @@ export const router = express.Router();
 
 async function generateLandingPageInputs(req: Request, res: Response) {
   try {
-    const idea = req.params.idea;
+    const idea: string = req.params.idea;
     const landingPageOutput = await GenerateService.generateLandingPageOutput(idea);
     return res.json(landingPageOutput);
   } catch (error) {

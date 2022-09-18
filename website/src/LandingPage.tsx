@@ -2,14 +2,16 @@ import { useEffect } from "react";
 import "./App.css";
 import { Box, Container, Typography, Button } from "@mui/material";
 import Header from "./Header";
+// Angry salmon roll, LA Kalbi roll, and the spicy salmon roll.
 
 function IntroPage(props: {
   title: string;
   description: string;
-  subtitle: string;
-  buttonText: string;
+  tagline: string;
+  actionButtonText: string;
 }) {
-  const { title, description, subtitle, buttonText } = props;
+  const { title, description, tagline: tagLine, actionButtonText } = props;
+  console.log("Intro page props: ", props);
 
   return (
     <Box
@@ -24,11 +26,8 @@ function IntroPage(props: {
           flexDirection={"column"}
           alignItems="center"
         >
-          <Typography fontWeight={500} fontSize={28}>
-            {title}
-          </Typography>
           <Typography fontWeight={700} fontSize={36} paddingTop="5px">
-            {subtitle}
+            {tagLine}
           </Typography>
 
           {/* <Box paddingTop={"20px"} maxWidth={"500px"}> */}
@@ -47,7 +46,7 @@ function IntroPage(props: {
                 // window.location.href = "/signup-or-login";
               }}
             >
-              {buttonText}
+              {actionButtonText}
             </Button>
           </Box>
         </Box>
@@ -57,49 +56,31 @@ function IntroPage(props: {
 }
 
 function LandingPage(props: {
-  name: string;
-  tagLine: string;
+  title: string;
+  tagline: string;
   description: string;
   image: string;
   imageAlt: string;
-  actionText: string;
+  actionButtonText: string;
 }) {
-  const { name, tagLine, description, image, imageAlt, actionText } = props;
+  const { title, tagline: tagLine, description, image, imageAlt, actionButtonText } = props;
   useEffect(() => {
     // This will run when the page first loads and whenever the title changes
-    document.title = name;
-  }, [name]);
+    document.title = title;
+  }, [title]);
 
   return (
-    // <div className="App">
-    //   {/* <h1>{name}</h1>
-
-    //   <div className="card">
-    //     <button >
-    //       {actionText}
-    //     </button>
-    //     <p>
-    //       {tagLine}
-    //     </p>
-    //   </div>
-    //   <p className="read-the-docs">
-    //     {description}
-    //   </p> */}
-    //   <IntroPage title={name} description={description} subtitle={tagLine} buttonText={actionText} />
-    // </div>
-
     <Box
-    // width={"100vw"}
     >
       {/* Appbar */}
-      <Header pages={[]} title={name} />
+      <Header pages={[]} title={title} />
 
       {/* Intro */}
       <IntroPage
-        title={name}
+        title={title}
         description={description}
-        subtitle={tagLine}
-        buttonText={actionText}
+        tagline={tagLine}
+        actionButtonText={actionButtonText}
       />
     </Box>
   );
