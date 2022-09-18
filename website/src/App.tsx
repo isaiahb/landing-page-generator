@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes, useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import PromptPage from "./PromptPage";
+import { ContactSection } from "./components/contact";
+import { AboutSection } from "./components/about";
 
 function JoeMama() {
   return (
@@ -70,6 +72,9 @@ function App() {
       <Routes>
         <Route path="/:title/:idea" element={<LandingPageTemplate />} />
         <Route path="/prompt/" element={<PromptPage />} />
+        <Route path="/test/" element={<ContactSection />} />
+        <Route path="/jest/" element={<AboutSection people={[{name: "bob", bio: "nerd", image: "https://1.bp.blogspot.com/-IeuuJ8GCKWQ/TvYypiPE-uI/AAAAAAAAAD4/Ct9VdoiKH70/s1600/smiley+face-face+smile-free-Smiley+Face.png"},
+                                                             {name: "rob", bio: "nerdier", image: "https://pngimg.com/uploads/smiley/smiley_PNG27.png"}]}/>} />
         <Route path="*" element={<JoeMama />} />
       </Routes>
     </BrowserRouter>
