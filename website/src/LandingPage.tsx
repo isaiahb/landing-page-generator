@@ -41,7 +41,7 @@ function LandingPage(props: {
   } = props;
   useEffect(() => {
     // This will run when the page first loads and whenever the title changes
-    document.title = title;
+    document.title = title.split(":")[0].split("-")[0];
   }, [title]);
 
   return (
@@ -49,12 +49,12 @@ function LandingPage(props: {
       {/* Appbar */}
       <Header
         pages={["Problem Statement", "Real Testimonials", "Contact Us"]}
-        title={title.split(":")[0]}
+        title={title.split(":")[0].split("-")[0]}
       />
 
       {/* Intro */}
       <IntroPage
-        title={title}
+        title={title.split(":")[0].split("-")[0]}
         description={description}
         tagline={tagLine}
         actionButtonText={actionButtonText}

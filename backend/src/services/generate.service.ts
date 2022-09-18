@@ -61,10 +61,10 @@ async function createCompletion(prompt: string, model = "text-davinci-002"): Pro
     model,
     // model: "text-davinci-002",
     // model: "text-curie-001",
-    temperature: 0.7,
+    temperature: 0.6,
     max_tokens: 512,
     top_p: .9,
-    best_of: 2,
+    best_of: 1,
     // user: userId,
   });
 

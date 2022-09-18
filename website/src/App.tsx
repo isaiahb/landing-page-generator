@@ -52,9 +52,9 @@ function OurLandingPage() {
       setLoading(true);
       try {
         const response = await axios.get(
-          `/api/generate/${title}, ${description}`
+          `/api/generate/${description}`
         );
-        setLandingPage({ ...response.data, actionButtonURL: "/create" });
+        setLandingPage({ ...response.data, actionButtonURL: "/create", title: "My Landing Page" });
         console.log({ ...response.data });
       } catch (error) {
         console.log(error);
