@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "gcp-build": "npm run build",
+    "gcp-build": "npm run build && cp -r src/assets dist/assets",
     "create-env": "printenv > .env",
     "build": "tsc -p .",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
