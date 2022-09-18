@@ -3,6 +3,7 @@ import cohere from "../connections/cohere.client";
 import { CreateCompletionResponse } from "openai";
 import * as AssetsService from "./assets.service";
 import dotenv from "dotenv";
+import { PageI } from "../models/page.model";
 dotenv.config();
 
 const SITE_URL = process.env.SITE_URL as string;
@@ -26,38 +27,26 @@ const colorAccents = {
   blue: "#00A0E8",
 }
 
-type Teammate = {
-  name: string;
-  description: string;
-  image: string;
-};
-
-type Testimonial = {
-  name: string;
-  description: string;
-  // image: string;
-};
-
 //Define types for the output.
-type LandingPageOutput = {
-  // Intro Section.
-  title: string;
-  tagline: string;
-  description: string;
-  actionButtonText: string;
+// type LandingPageOutput = {
+//   // Intro Section.
+//   title: string;
+//   tagline: string;
+//   description: string;
+//   actionButtonText: string;
 
-  // Additional Info Section.
-  problemStatement?: string;
-  solutionStatment?: string;
+//   // Additional Info Section.
+//   problemStatement?: string;
+//   solutionStatment?: string;
 
-  // Teammates Section.  
-  teammates?: Teammate[];
+//   // Teammates Section.  
+//   teammates?: Teammate[];
 
-  // Testimonials Section.
-  testimonials?: Testimonial[];
+//   // Testimonials Section.
+//   testimonials?: Testimonial[];
 
-  image?: string;
-};
+//   image?: string;
+// };
 
 async function createCompletion(prompt: string, model = "text-davinci-002"): Promise<string> {
   // const cohereCompletion = await cohere.generate({
@@ -88,7 +77,7 @@ async function createCompletion(prompt: string, model = "text-davinci-002"): Pro
   return text;
 }
 
-export async function generateLandingPageOutput(idea: string, teammates: {name?: string, description: string, url: string}[] = []): Promise<LandingPageOutput> {
+export async function generateLandingPageOutput(idea: string, teammates: {name?: string, description: string, url: string}[] = []): Promise<PageI> {
   console.log("Idea:", idea);
   // Call openAI api to generate comment text.
 
@@ -101,7 +90,7 @@ export async function generateLandingPageOutput(idea: string, teammates: {name?:
   const taglinePrompt = "Create a tagline for the following idea: " + idea;
   const tagline = createCompletion(taglinePrompt);
 
-  const descriptionPrompt = "Create a description for the following idea: " + idea;
+  const descriptionPrompt = "Create a description for the our product idea: " + idea;
   const description = createCompletion(descriptionPrompt);
 
   const actionButtonTextPrompt = "Create a call to action button text for the following idea: " + idea;
@@ -124,7 +113,7 @@ export async function generateLandingPageOutput(idea: string, teammates: {name?:
   for (let i = 0; i < 6; i++) {
     const testimonialPrompt = "Create a testimonial for the following idea: " + idea;
     const testimonial = createCompletion(testimonialPrompt, "text-curie-001");
-    const randomName = createCompletion("Create a random name", "text-curie-001");
+    const randomName = createCompletion("Pick a name of a random living famous person", "text-davinci-002");
     testimonialPromises.push(testimonial);
     namePromises.push(randomName);
   }
@@ -155,15 +144,15 @@ export async function generateLandingPageOutput(idea: string, teammates: {name?:
   const _names = await Promise.all(namePromises);
   const _testimonials = (await Promise.all(testimonialPromises)).map((testimonial, index) => {
     return {
-      name: _names[index],
+      name: _names[index].trim().split(",")[0],
       description: testimonial,    }
-  });
+  }).filter((testimonial) => testimonial.name.split(" ").length <= 3);
 
   const image = `${API_URL}/${results[6]}`;
   console.log("Closest Image:", image);
   console.log("Testimonials:", _testimonials);
 
-  const output: LandingPageOutput = {
+  const output: PageI = {
     title: results[0],
     tagline: results[1],
     description: results[2],

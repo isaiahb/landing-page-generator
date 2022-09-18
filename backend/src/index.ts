@@ -25,11 +25,15 @@ if (!SITE_URL) throw new Error("SITE_URL is not defined");
 const app = express();
 app.use(helmet());
 app.use(cors({ credentials: true, origin: [
-  '*', 
+  // '*', 
   'http://localhost:3000', 
   'http://localhost:3000',
   'http://127.0.0.1:5173',
   'http://localhost:5173',
+  'https://www.mylandingpage.tech/',
+  'https://mylandingpage.tech/',
+  'https://www.mylandingpage.tech',
+  'https://mylandingpage.tech',
   SITE_URL,
 ] }));
 
