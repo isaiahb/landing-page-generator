@@ -5,6 +5,7 @@ import Header from "./Header";
 import { IntroPage } from "./sections/Intro";
 import { ProblemStatementPage } from "./sections/ProblemStatement";
 import { TestimonialsSection } from "./sections/Testimonials";
+import { AboutSection } from "./components/about";
 
 function LandingPage(props: {
   title: string;
@@ -22,6 +23,12 @@ function LandingPage(props: {
     name: string;
     description: string;
   }[];
+
+  teammates?: {
+    name: string;
+    description: string;
+    image: string;
+  }[];
 }) {
   const {
     title,
@@ -38,6 +45,9 @@ function LandingPage(props: {
 
     // Testimonials.
     testimonials,
+
+    // Teammates.
+    teammates,
   } = props;
   useEffect(() => {
     // This will run when the page first loads and whenever the title changes
@@ -71,9 +81,10 @@ function LandingPage(props: {
       )}
 
       {/* Real testimonials */}
-      <TestimonialsSection
-        testimonials={testimonials ?? []}
-      />
+      <TestimonialsSection testimonials={testimonials ?? []} />
+
+      {/* About team */}
+      {teammates && <AboutSection people={teammates} />}
 
       {/* Contact us */}
 
