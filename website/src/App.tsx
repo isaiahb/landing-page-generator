@@ -1,5 +1,11 @@
 import LandingPage from "./LandingPage";
-import { BrowserRouter, Route, Routes, useParams, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  useParams,
+  Link,
+} from "react-router-dom";
 import { useEffect, useState } from "react";
 import PromptPage from "./PromptPage";
 import axios from "axios";
@@ -46,15 +52,43 @@ function OurLandingPage() {
   const description =
     "A website that lets you enter a short description about your project and generates a landing page for you.";
 
+  const team = [
+    {
+      name: "Isaiah Ballah",
+      description: "Full Stack Developer, API, and Database",
+      image: "https://media-exp1.licdn.com/dms/image/C5603AQFCZy9hRxCfXw/profile-displayphoto-shrink_400_400/0/1517064676278?e=1669248000&v=beta&t=RrlWIUMT2_eaoaUUPCBNvoRNavIiiFOkSJblgjbcBEQ",
+    },
+
+    {
+      name: "Sherry Shu",
+      description: "Slide deck and UI/UX, Project Manager",
+      image: "https://media-exp1.licdn.com/dms/image/C5603AQEvoc36igsH8g/profile-displayphoto-shrink_400_400/0/1657816374526?e=1669248000&v=beta&t=cEHpcb1nngqVwUBduwliEEFNR9N2ET7oPkkwH11FXWU"
+    },
+    {
+      name: "Andrew Mascillaro",
+      description: "Frontend developer",
+      image: "https://media-exp1.licdn.com/dms/image/C4E03AQH_ne07g-YziQ/profile-displayphoto-shrink_800_800/0/1651773260253?e=1669248000&v=beta&t=wlMgkGOXezPLpvs6N0e-fwb-c27mG7xToWKBUwR7NB0",
+    },
+
+    {
+      name: "Kate McCurley",
+      description: "Frontend developer, UI/UX",
+      image: "https://scontent.xx.fbcdn.net/v/t1.15752-9/305020618_431168649147577_4549748655474375318_n.png?stp=dst-png_p403x403&_nc_cat=111&ccb=1-7&_nc_sid=aee45a&_nc_ohc=PGwuudbjM5wAX9plfHu&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AVL9IabAhNgAVhGVow4R9WlHPH-8qyfkUoa014aW87cfrw&oe=634BFB0B"
+    },
+    ];
+
   useEffect(() => {
     if (loading) return;
     async function getLandingPageInput() {
       setLoading(true);
       try {
-        const response = await axios.get(
-          `/api/generate/${description}`
-        );
-        setLandingPage({ ...response.data, actionButtonURL: "/create", title: "My Landing Page" });
+        const response = await axios.get(`/api/generate/${description}`);
+        setLandingPage({
+          ...response.data,
+          actionButtonURL: "/create",
+          title: "My Landing Page",
+          teammates: team,
+        });
         console.log({ ...response.data });
       } catch (error) {
         console.log(error);
@@ -84,6 +118,7 @@ function OurLandingPage() {
       problemStatement={landingPage.problemStatement}
       solutionStatment={landingPage.solutionStatment}
       testimonials={landingPage.testimonials}
+      teammates={landingPage.teammates}
     />
   );
 }
@@ -120,8 +155,8 @@ function YourLandingPage() {
         if (!title) return;
 
         const response = await api.page.get(title);
-        setLandingPage({ ...response as any, actionButtonURL: "#" });
-        console.log({ ...response });
+        setLandingPage({ ...(response as any), actionButtonURL: "#" });
+        console.log("Your landing page", { ...response });
       } catch (error) {
         console.log(error);
       }
@@ -150,6 +185,7 @@ function YourLandingPage() {
       problemStatement={landingPage.problemStatement}
       solutionStatment={landingPage.solutionStatment}
       testimonials={landingPage.testimonials}
+      teammates={landingPage.teammates}
     />
   );
 }
@@ -235,7 +271,6 @@ function App() {
 
 // Create a page to see a list of all the pages. get pages from api. display them as clickable links.
 function AllPages2() {
-  
   const [pages, setPages] = useState<PageI[]>([]);
   const [loading, setLoading] = useState(false);
 

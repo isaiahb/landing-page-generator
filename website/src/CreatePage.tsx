@@ -4,6 +4,7 @@ import { Box, Container, Typography, Button, TextField } from "@mui/material";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 import api, { PageI } from "./api";
+import { LoadingOverlay } from '@mantine/core';
 
 type Teammate = {
   name: string;
@@ -25,8 +26,11 @@ function Page() {
     if (loading) return;
     setLoading(true);
     try {
+      console.log("$$$$$ - Trying to create landing page");
       const pageInputs: PageI = (await api.generate.create(prompt.title + " - " + prompt.description)).data as PageI;
-      const page = await api.page.create({...pageInputs, title: prompt.title});
+      console.log("$$$$$ - Page inputs: ", pageInputs);
+
+      const page = await api.page.create({...pageInputs, title: prompt.title, teammates});
       navigate(`/page/${prompt.title}`);
     }
     catch (error) {
@@ -35,6 +39,10 @@ function Page() {
     finally {
       setLoading(false);
     }
+  }
+
+  if (loading) {
+    return <LoadingOverlay visible={loading} />;
   }
 
   return (
@@ -52,7 +60,7 @@ function Page() {
             fontSize={28}
             paddingBottom="20px"
           >
-            Tell us about your product!
+            Tell us about your project!
           </Typography>
 
           {/* Text area for product title */}
@@ -206,6 +214,11 @@ function Page() {
           </Box>
         </Box>
       </Container>
+
+      <div style={{ width: 400, position: 'relative' }}>
+        <LoadingOverlay visible={loading} overlayBlur={2} />
+        {/* ...other content */}
+      </div>
     </Box>
   );
 }
