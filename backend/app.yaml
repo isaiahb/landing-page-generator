@@ -2,6 +2,8 @@ service: default
 runtime: nodejs14
 
 handlers:
+- url: /assets
+    static_dir: src/assets
 - url: /.*
   secure: always
   redirect_http_response_code: 301
