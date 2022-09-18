@@ -33,6 +33,9 @@ function CreateLandingPageFromUrl() {
     problemStatement: "",
     solutionStatment: "",
 
+    // Testimonials.
+    testimonials: [],
+
   });
   const [loading, setLoading] = useState(false);
 
@@ -70,6 +73,10 @@ function CreateLandingPageFromUrl() {
       // Problem statement.
       problemStatement={landingPageInput.problemStatement}
       solutionStatment={landingPageInput.solutionStatment}
+
+      // Testimonials.
+      testimonials={landingPageInput.testimonials}
+      
     />
   );
 }

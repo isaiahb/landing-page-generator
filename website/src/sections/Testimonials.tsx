@@ -9,20 +9,25 @@ const message = `Truncation should be conditionally applicable on this long line
  as this is a much longer line than what the container can support. `;
 
 function Testimonial(props: { user: string; message: string }) {
+  console.log("Props.user: ", props.user.charAt(0));
+
   return (
     <Grid container wrap="nowrap" spacing={2}>
-      <Grid item>
-        <Avatar>{props.user[0] ?? "A"}</Avatar>
-      </Grid>
+      {/* <Grid item>
+        <Avatar>{props.user.trim().charAt(0) ?? "A"}</Avatar>
+      </Grid> */}
       <Grid item xs>
         <Typography>{props.message}</Typography>
+        <Typography variant="body2" color="text.secondary" paddingTop="5px">
+          -{props.user}
+        </Typography>
       </Grid>
     </Grid>
   );
 }
 
 export function TestimonialsSection(props: {
-  testimonials: { user: string; message: string }[];
+  testimonials: { name: string; description: string }[];
   bgcolor?: string;
 }) {
   return (
@@ -43,8 +48,8 @@ export function TestimonialsSection(props: {
               <Grid item xs={12} md={6} paddingY="10px">
                 <Paper sx={{ padding: "15px", width: "400px" }}>
                   <Testimonial
-                    user={testimonial.user}
-                    message={testimonial.message}
+                    user={testimonial.name}
+                    message={testimonial.description}
                   />
                 </Paper>
               </Grid>

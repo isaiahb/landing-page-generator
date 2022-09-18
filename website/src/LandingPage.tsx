@@ -16,6 +16,11 @@ function LandingPage(props: {
 
   problemStatement?: string;
   solutionStatment?: string;
+
+  testimonials?: {
+    name: string;
+    description: string;
+  }[];
 }) {
   const {
     title,
@@ -28,6 +33,9 @@ function LandingPage(props: {
     // Problem statement.
     problemStatement,
     solutionStatment,
+
+    // Testimonials.
+    testimonials,
   } = props;
   useEffect(() => {
     // This will run when the page first loads and whenever the title changes
@@ -61,12 +69,7 @@ function LandingPage(props: {
 
       {/* Real testimonials */}
       <TestimonialsSection
-        testimonials={[
-          { user: "John Doe", message: "This is a great product!" },
-          { user: "Jane Doe", message: "This is a great product!" },
-          { user: "Josh Doe", message: "This is the best product!" },
-          { user: "Jake Doe", message: "This is the greatest product!" },
-        ]}
+        testimonials={testimonials ?? []}
       />
 
       {/* Contact us */}

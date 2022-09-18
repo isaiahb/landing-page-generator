@@ -32,6 +32,12 @@ type Teammate = {
   image: string;
 };
 
+type Testimonial = {
+  name: string;
+  description: string;
+  // image: string;
+};
+
 //Define types for the output.
 type LandingPageOutput = {
   // Intro Section.
@@ -46,6 +52,9 @@ type LandingPageOutput = {
 
   // Teammates Section.  
   teammates?: Teammate[];
+
+  // Testimonials Section.
+  testimonials?: Testimonial[];
 
   image?: string;
 };
@@ -79,7 +88,7 @@ async function createCompletion(prompt: string, model = "text-davinci-002"): Pro
   return text;
 }
 
-export async function generateLandingPageOutput(idea: string): Promise<LandingPageOutput> {
+export async function generateLandingPageOutput(idea: string, teammates: {name?: string, description: string, url: string}[] = []): Promise<LandingPageOutput> {
   console.log("Idea:", idea);
   // Call openAI api to generate comment text.
 
@@ -104,6 +113,22 @@ export async function generateLandingPageOutput(idea: string): Promise<LandingPa
   const solutionPrompt = "Describe our solution for the following idea: " + idea + "Description: " + description + "Problem Statement: " + problemStatement + "Solution : ";
   const solution = createCompletion(solutionPrompt);
 
+  const teammatePrompts = teammates.map((teammate) => {
+    const teammatePrompt = "Create a description for the following teammate: " + teammate.name + "Description: " + teammate.description;
+    return createCompletion(teammatePrompt);
+  });
+
+  // Create testimonials.
+  const testimonialPromises: Promise<string>[] = [];
+  const namePromises = [];
+  for (let i = 0; i < 6; i++) {
+    const testimonialPrompt = "Create a testimonial for the following idea: " + idea;
+    const testimonial = createCompletion(testimonialPrompt, "text-curie-001");
+    const randomName = createCompletion("Create a random name", "text-curie-001");
+    testimonialPromises.push(testimonial);
+    namePromises.push(randomName);
+  }
+
    const promises = [
     // Intro Section.
     title,
@@ -120,8 +145,23 @@ export async function generateLandingPageOutput(idea: string): Promise<LandingPa
   ];
   
   const results = await Promise.all(promises);
+  const _teammates = (await Promise.all(teammatePrompts)).map((teammatePrompt, index) => {
+    return {
+      name: teammates[index].name ?? "Teammate",
+      description: teammatePrompt,
+      image: teammates[index].url,
+    }
+  });
+  const _names = await Promise.all(namePromises);
+  const _testimonials = (await Promise.all(testimonialPromises)).map((testimonial, index) => {
+    return {
+      name: _names[index],
+      description: testimonial,    }
+  });
+
   const image = `${API_URL}/${results[6]}`;
   console.log("Closest Image:", image);
+  console.log("Testimonials:", _testimonials);
 
   const output: LandingPageOutput = {
     title: results[0],
@@ -131,6 +171,9 @@ export async function generateLandingPageOutput(idea: string): Promise<LandingPa
 
     problemStatement: results[4],
     solutionStatment: results[5],
+
+    teammates: _teammates,
+    testimonials: _testimonials,
 
     image,
   };
