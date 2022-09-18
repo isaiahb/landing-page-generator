@@ -8,3 +8,6 @@ MyLandingPage creates a landing page site for an emerging project within seconds
 
 ## How we built it
 We used MongoDB, Express, React, Node, Typescript, Cohere, Google Cloud Platform, CICD, and AppEngine in order to create our final product.
+
+## How to use it
+Type in the name of your project, followed by a quick elevator pitch (1-2 lines) of the project and its goals. After a few seconds, MyLandingPage will generate a site!
