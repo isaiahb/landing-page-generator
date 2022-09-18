@@ -1,8 +1,9 @@
 import LandingPage from "./LandingPage";
 import { BrowserRouter, Route, Routes, useParams } from "react-router-dom";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import PromptPage from "./PromptPage";
+import axios from "axios";
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
 function JoeMama() {
   return (
@@ -31,6 +32,7 @@ function CreateLandingPageFromUrl() {
     // Problem statement.
     problemStatement: "",
     solutionStatment: "",
+
   });
   const [loading, setLoading] = useState(false);
 
@@ -40,7 +42,7 @@ function CreateLandingPageFromUrl() {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:7001/api/generate/${idea}`
+          `/api/generate/${idea}`
         );
         setLandingPageInput(response.data);
         console.log({...response.data, });

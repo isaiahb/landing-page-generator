@@ -48,6 +48,7 @@ function LandingPage(props: {
         description={description}
         tagline={tagLine}
         actionButtonText={actionButtonText}
+        image={image}
       />
 
       {/* Problem statement */}

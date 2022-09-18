@@ -8,6 +8,7 @@ steps:
   args: ["run", "create-env"]
   env:
   - 'SITE_URL=${_SITE_URL}'
+  - 'API_URL=${_API_URL}'
   - 'MONGO_URL=${_MONGO_URL}'
   - 'OPENAI_API_KEY=${_OPENAI_API_KEY}'
   - 'COHERE_API_KEY=${_COHERE_API_KEY}'

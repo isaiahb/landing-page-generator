@@ -9,6 +9,7 @@ import helmet from "helmet";
 import { Api } from "./api";
 import cookieParser from "cookie-parser";
 import * as mongoConnection from "./connections/mongo.connection";
+import path from "path";
 
 dotenv.config();
 mongoConnection.init();
@@ -37,6 +38,9 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser());
 
 app.use("/api", Api);
+
+// server assets under /assets url.
+app.use(express.static(path.join(__dirname, '/assets')));
 
 app.listen(PORT, () => {
   console.log(`server is listening on ${PORT}`);

@@ -1,6 +1,30 @@
 import openai from "../connections/openai.client";
 import cohere from "../connections/cohere.client";
 import { CreateCompletionResponse } from "openai";
+import * as AssetsService from "./assets.service";
+import dotenv from "dotenv";
+dotenv.config();
+
+const SITE_URL = process.env.SITE_URL as string;
+if (!SITE_URL) throw new Error("SITE_URL is not defined");
+const API_URL = process.env.API_URL as string;
+if (!API_URL) throw new Error("API_URL is not defined");
+
+const colors = {
+  purple: "#6C63FF",
+  orange: "#F9A826",
+  red: "#F50057",
+  green: "#00BFA6",
+  blue: "#00B0FF",
+}
+
+const colorAccents = {
+  purple: "#544CD2",
+  orange: "#E09728",
+  red: "#DC0050",
+  green: "#00A08C",
+  blue: "#00A0E8",
+}
 
 type Teammate = {
   name: string;
@@ -22,6 +46,8 @@ type LandingPageOutput = {
 
   // Teammates Section.  
   teammates?: Teammate[];
+
+  image?: string;
 };
 
 async function createCompletion(prompt: string, model = "text-davinci-002"): Promise<string> {
@@ -57,6 +83,9 @@ export async function generateLandingPageOutput(idea: string): Promise<LandingPa
   console.log("Idea:", idea);
   // Call openAI api to generate comment text.
 
+  console.log("📂 FILES:", AssetsService.fileNames);
+  const closestImage = AssetsService.getClosestEmbeddingFileName(idea);
+
   const titlePrompt = `Create a short title for the landing page for the idea: ${idea}`;
   const title = createCompletion(titlePrompt);
 
@@ -84,11 +113,16 @@ export async function generateLandingPageOutput(idea: string): Promise<LandingPa
 
     // Problem statement section.
     problemStatement,
-    solution
+    solution,
 
+    // Best Image.
+    closestImage,
   ];
-
+  
   const results = await Promise.all(promises);
+  const image = `${API_URL}/${results[6]}`;
+  console.log("Closest Image:", image);
+
   const output: LandingPageOutput = {
     title: results[0],
     tagline: results[1],
@@ -97,6 +131,8 @@ export async function generateLandingPageOutput(idea: string): Promise<LandingPa
 
     problemStatement: results[4],
     solutionStatment: results[5],
+
+    image,
   };
   return output;
 }
