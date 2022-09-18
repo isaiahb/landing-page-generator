@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { Box, Container, Typography, Button, TextField } from "@mui/material";
 import Header from "./Header";
+import { useNavigate } from "react-router-dom";
 
-type TeamMate = {
+type Teammate = {
   name: string;
   description: string;
   image: string;
 };
 function Page() {
   const [prompt, setPrompt] = useState({ title: "", description: "" });
-  const [teammates, setTeammates] = useState<TeamMate[]>([]);
+  const [teammates, setTeammates] = useState<Teammate[]>([]);
+  const navigate = useNavigate();
 
   function onPromptChange(event: React.ChangeEvent<HTMLInputElement>) {
     setPrompt({ ...prompt, [event.target.name]: event.target.value });
@@ -174,7 +176,8 @@ function Page() {
               size="large"
               style={{ backgroundColor: "black", fontWeight: "600" }}
               onClick={() => {
-                window.location.href = `/${prompt.title}/${prompt.description}`;
+                const url = `/create/${prompt.title}/${prompt.description}`;
+                navigate(url);
               }}
               fullWidth
             >

@@ -17,7 +17,7 @@ function JoeMama() {
   );
 }
 
-function LandingPageTemplate() {
+function CreateLandingPageFromUrl() {
   // Get title and idea params from the URL.
   const { title: TITLE, idea } = useParams();
   const [landingPageInput, setLandingPageInput] = useState({
@@ -27,6 +27,10 @@ function LandingPageTemplate() {
     image: "",
     imageAlt: "",
     actionButtonText: "",
+
+    // Problem statement.
+    problemStatement: "",
+    solutionStatment: "",
   });
   const [loading, setLoading] = useState(false);
 
@@ -60,6 +64,10 @@ function LandingPageTemplate() {
       image={landingPageInput.image}
       imageAlt={landingPageInput.imageAlt}
       actionButtonText={landingPageInput.actionButtonText}
+
+      // Problem statement.
+      problemStatement={landingPageInput.problemStatement}
+      solutionStatment={landingPageInput.solutionStatment}
     />
   );
 }
@@ -68,7 +76,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/:title/:idea" element={<LandingPageTemplate />} />
+        <Route path="/create/:title/:idea" element={<CreateLandingPageFromUrl />} />
+        <Route path="/github/:username/:repo" element={<PromptPage />} />
         <Route path="/prompt/" element={<PromptPage />} />
         <Route path="*" element={<JoeMama />} />
       </Routes>
