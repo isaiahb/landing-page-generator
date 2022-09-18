@@ -49,7 +49,7 @@ function LandingPage(props: {
       {/* Appbar */}
       <Header
         pages={["Problem Statement", "Real Testimonials", "Contact Us"]}
-        title={title}
+        title={title.split(":")[0]}
       />
 
       {/* Intro */}
