@@ -68,11 +68,11 @@ async function createCompletion(prompt: string, model = "text-davinci-002"): Pro
     // user: userId,
   });
 
-  console.log("completion");
+  // console.log("completion");
   const data: CreateCompletionResponse = completion.data;
   const choices = data.choices;
   if (!choices || choices.length === 0 || !choices[0].text) throw new Error("No choices found.");
-  console.log(choices);
+  // console.log(choices);
   const text = choices[0].text;
   return text;
 }
@@ -81,7 +81,7 @@ export async function generateLandingPageOutput(idea: string, teammates: {name?:
   console.log("Idea:", idea);
   // Call openAI api to generate comment text.
 
-  console.log("📂 FILES:", AssetsService.fileNames);
+  // console.log("📂 FILES:", AssetsService.fileNames);
   const closestImage = AssetsService.getClosestEmbeddingFileName(idea);
 
   const titlePrompt = `Create a short title for the landing page for the idea: ${idea}`;
@@ -150,7 +150,7 @@ export async function generateLandingPageOutput(idea: string, teammates: {name?:
 
   const image = `${API_URL}/${results[6]}`;
   console.log("Closest Image:", image);
-  console.log("Testimonials:", _testimonials);
+  // console.log("Testimonials:", _testimonials);
 
   const output: PageI = {
     title: results[0],
