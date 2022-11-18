@@ -17,10 +17,10 @@ fs.readdir(directoryPath, function (err, files) {
     //listing all files using forEach
     files.forEach(function (file) {
         // Do whatever you want to do with the file
-        console.log(file); 
+        // console.log(file); 
         fileNames.push(file);
     });
-    console.log(fileNames);
+    // console.log(fileNames);
 
     // Generate embeds for each file.
     (async () => {
@@ -47,20 +47,27 @@ function getDistance(embedding1: number[], embedding2: number[]): number {
 }
 
 export async function getClosestEmbeddingFileName(text: string): Promise<string> {
-  // Get the closest file name to the given text.
-  const response = await cohere.embed({
-    texts: [text],
-  });
-  const embedding = response.body.embeddings[0];
-  let closestEmbeddingIndex = 0;
-  for (let i = 0; i < embeddings.length; i++) {
-    const currentEmbedding = embeddings[i];
-    const closestEmbedding = embeddings[closestEmbeddingIndex];
-    const currentDistance = getDistance(embedding, currentEmbedding);
-    const closestDistance = getDistance(embedding, closestEmbedding);
-    if (currentDistance < closestDistance) {
-      closestEmbeddingIndex = i;
+  try {
+    // Get the closest file name to the given text.
+    const response = await cohere.embed({
+      texts: [text],
+    });
+    const embedding = response.body.embeddings[0];
+    let closestEmbeddingIndex = 0;
+    for (let i = 0; i < embeddings.length; i++) {
+      const currentEmbedding = embeddings[i];
+      const closestEmbedding = embeddings[closestEmbeddingIndex];
+      const currentDistance = getDistance(embedding, currentEmbedding);
+      const closestDistance = getDistance(embedding, closestEmbedding);
+      if (currentDistance < closestDistance) {
+        closestEmbeddingIndex = i;
+      }
     }
+    return fileNames[closestEmbeddingIndex] ?? "";
   }
-  return fileNames[closestEmbeddingIndex] ?? "";
+  catch(err) {
+    console.log(err);
+  }
+
+  return "";
 }

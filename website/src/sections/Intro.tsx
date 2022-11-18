@@ -58,7 +58,7 @@ export function IntroPage(props: {
             </Grid>
             {image && (
               <Grid item xs={12} md={6} p="20px">
-                <img src={image} style={{maxWidth: "100%"}} alt="intro" />
+                <img src={image} style={{maxWidth: "100%"}} alt="Sorry we ran out of co:here credits :(" />
               </Grid>
             )}
           </Grid>

@@ -12,6 +12,7 @@ import axios from "axios";
 import CreatePage from "./CreatePage";
 import api, { PageI } from "./api";
 import { AllPages } from "./AllPages";
+
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 axios.defaults.withCredentials = true;
 
